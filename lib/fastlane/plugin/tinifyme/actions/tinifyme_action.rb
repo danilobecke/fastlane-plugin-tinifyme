@@ -58,7 +58,7 @@ module Fastlane
           FastlaneCore::ConfigItem.new(
             key: :image_formats,
             description: "Allowed image extensions to be compressed",
-            default_value: [".jpg", ".png", ".webp"],
+            default_value: [".jpg", ".png", ".webp", ".jpeg"],
             optional: false,
             type: Array
           )

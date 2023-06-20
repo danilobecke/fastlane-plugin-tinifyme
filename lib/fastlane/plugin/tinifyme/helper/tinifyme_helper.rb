@@ -25,7 +25,7 @@ module Fastlane
 
       def self.get_modified_images(image_extensions)
         added_or_modified = `git diff --name-only --cached --diff-filter=d`
-        return added_or_modified.split("\n").select { |file| file.end_with?(*image_extensions) }
+        return added_or_modified.split("\n").select { |file| file.downcase.end_with?(*image_extensions) }
       end
 
       def self.compress(images)
