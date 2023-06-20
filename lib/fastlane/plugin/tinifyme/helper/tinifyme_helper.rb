@@ -2,19 +2,17 @@ require 'fastlane_core/ui/ui'
 require 'tinify'
 
 module Fastlane
-  UI = FastlaneCore::UI unless Fastlane.const_defined?("UI")
+  UI = FastlaneCore::UI unless Fastlane.const_defined?(:UI)
 
   module Helper
     class TinifymeHelper
       def self.validate_credentials(api_key)
-        begin
-          UI.message(self.format!('Checking tinypng credentials...', is_step: true))
-          Tinify.key = api_key
-          Tinify.validate!
-          UI.success(self.format!('Valid credentials!'))
-        rescue Tinify::Error => e
-          UI.abort_with_message!(e)
-        end
+        UI.message(self.format!('Checking tinypng credentials...', is_step: true))
+        Tinify.key = api_key
+        Tinify.validate!
+        UI.success(self.format!('Valid credentials!'))
+      rescue Tinify::Error => e
+        UI.abort_with_message!(e)
       end
 
       def self.format!(text, is_step: false)

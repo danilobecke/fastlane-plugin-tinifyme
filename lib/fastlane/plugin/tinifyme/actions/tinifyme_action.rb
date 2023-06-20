@@ -1,3 +1,4 @@
+require 'fastlane_core'
 require 'fastlane/action'
 require_relative '../helper/tinifyme_helper'
 
