@@ -18,10 +18,14 @@ module Fastlane
           return UI.success(@helper.format!('No images found!')) unless length > 0
 
           UI.success(@helper.format!(format('Found %<count>d %<text>s.', count: length, text: length > 1 ? 'images' : 'image')))
-          compress(modified_images, key)
+          compressed = compress(modified_images, key)
+          if !compressed
+            UI.abort_with_message!("The commit has failed.") unless params[:abort_commit_without_internet_connection] == false
+          end
+
           UI.message(@helper.format!('Adding to commit...', is_step: true))
           @helper.add_to_commit(modified_images)
-          UI.success(@helper.format!('Compressed images added to the current commit.'))
+          UI.success(@helper.format!(format('%<text>s added to the current commit.', text: compressed ? 'Compressed images' : 'Images')))
         end
       end
 
@@ -62,6 +66,13 @@ module Fastlane
             default_value: [".jpg", ".png", ".webp", ".jpeg"],
             optional: false,
             type: Array
+          ),
+          FastlaneCore::ConfigItem.new(
+            key: :abort_commit_without_internet_connection,
+            description: "Decide whether the commit should be aborted when there are images to be compressed and the internet connection is not reachable (thus, the compression won't be possible)",
+            default_value: true,
+            optional: false,
+            type: Array
           )
         ]
       end
@@ -71,11 +82,17 @@ module Fastlane
       end
 
       private_class_method def self.compress(images, key)
+        if !@helper.has_connection?
+          UI.important('No internet connection.')
+          return false
+        end
+
         @helper.validate_credentials(key)
         UI.message(@helper.format!('Compressing...', is_step: true))
         @helper.compress(images)
         length = images.length()
         UI.success(@helper.format!(format('Compressed %<count>d %<text>s.', count: length, text: length > 1 ? 'images' : 'image')))
+        return true
       end
     end
   end

@@ -6,6 +6,17 @@ module Fastlane
 
   module Helper
     class TinifymeHelper
+      def self.has_connection?
+        require 'net/http'
+        url = URI('https://www.google.com')
+        begin
+          Net::HTTP.start(url.host, url.port, :use_ssl => true)
+          return true
+        rescue
+          return false
+        end
+      end
+
       def self.validate_credentials(api_key)
         UI.message(self.format!('Checking tinypng credentials...', is_step: true))
         Tinify.key = api_key
