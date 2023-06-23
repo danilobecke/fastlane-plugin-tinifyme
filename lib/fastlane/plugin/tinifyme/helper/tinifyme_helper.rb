@@ -10,9 +10,9 @@ module Fastlane
         require 'net/http'
         url = URI('https://www.google.com')
         begin
-          Net::HTTP.start(url.host, url.port, :use_ssl => true)
+          Net::HTTP.start(url.host, url.port, use_ssl: true)
           return true
-        rescue
+        rescue SocketError
           return false
         end
       end

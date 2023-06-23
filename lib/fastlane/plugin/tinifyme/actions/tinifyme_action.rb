@@ -19,9 +19,7 @@ module Fastlane
 
           UI.success(@helper.format!(format('Found %<count>d %<text>s.', count: length, text: length > 1 ? 'images' : 'image')))
           compressed = compress(modified_images, key)
-          if !compressed
-            UI.abort_with_message!("The commit has failed.") unless params[:abort_commit_without_internet_connection] == false
-          end
+          UI.abort_with_message!("The commit was aborted.") unless compressed or params[:abort_commit_without_internet_connection] == false
 
           UI.message(@helper.format!('Adding to commit...', is_step: true))
           @helper.add_to_commit(modified_images)
@@ -82,10 +80,9 @@ module Fastlane
       end
 
       private_class_method def self.compress(images, key)
-        if !@helper.has_connection?
-          UI.important('No internet connection.')
-          return false
-        end
+        has_connection = @helper.has_connection?
+        UI.important('No internet connection.') unless has_connection
+        return false unless has_connection
 
         @helper.validate_credentials(key)
         UI.message(@helper.format!('Compressing...', is_step: true))
