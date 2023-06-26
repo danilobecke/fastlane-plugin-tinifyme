@@ -8,7 +8,7 @@ module Fastlane
       def self.run(params)
         key = params[:api_key]
         file_path = params[:file_path]
-        @helper = Helper::TinifymeHelper
+        @helper = Helper::TinifymeHelper.new
         if file_path
           compress([file_path], key)
         else

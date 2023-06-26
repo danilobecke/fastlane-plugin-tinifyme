@@ -6,7 +6,7 @@ module Fastlane
 
   module Helper
     class TinifymeHelper
-      def self.has_connection?
+      def has_connection?
         require 'net/http'
         url = URI('https://www.google.com')
         begin
@@ -17,7 +17,7 @@ module Fastlane
         end
       end
 
-      def self.validate_credentials(api_key)
+      def validate_credentials(api_key)
         UI.message(self.format!('Checking tinypng credentials...', is_step: true))
         Tinify.key = api_key
         Tinify.validate!
@@ -26,22 +26,22 @@ module Fastlane
         UI.abort_with_message!(e)
       end
 
-      def self.format!(text, is_step: false)
+      def format!(text, is_step: false)
         return format(' > %<text>s', text: text) if is_step
 
         return format('   %<text>s', text: text)
       end
 
-      def self.get_modified_images(image_extensions)
+      def get_modified_images(image_extensions)
         added_or_modified = `git diff --name-only --cached --diff-filter=d`
         return added_or_modified.split("\n").select { |file| file.downcase.end_with?(*image_extensions) }
       end
 
-      def self.compress(images)
+      def compress(images)
         images.each { |image| Tinify.from_file(image).to_file(image) }
       end
 
-      def self.add_to_commit(images)
+      def add_to_commit(images)
         images_text = images.join(" ")
         system(format('git add %<images>s', images: images_text))
       end
