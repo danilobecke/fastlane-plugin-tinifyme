@@ -3,7 +3,7 @@ require 'securerandom'
 describe Fastlane::Actions::TinifymeAction do
   let(:key) { SecureRandom.hex }
 
-  before do
+  before(:each) do
     @params = {}
     @params[:api_key] = key
   end
