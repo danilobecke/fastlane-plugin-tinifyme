@@ -65,4 +65,53 @@ describe Fastlane::Helper::TinifymeHelper do
       subject.compress(images)
     end
   end
+
+  context "when doing git operations" do
+    before(:all) do
+      require 'fileutils'
+      @git_path = 'git_mock'
+      Dir.chdir('spec')
+      FileUtils.mkdir_p(@git_path)
+      Dir.chdir(@git_path)
+      system("git init &> /dev/null")
+      system("cp ../images/* .")
+      system("git add image-removed.jpg")
+      system("git commit -m \"Add image\" &> /dev/null")
+    end
+
+    after(:all) do
+      Dir.chdir("..")
+      system(format("rm -rf %<path>s", path: @git_path))
+      Dir.chdir("..")
+    end
+
+    context "when checking for staged images" do
+      before do
+        system("rm image-removed.jpg")
+        system("git add .")
+      end
+
+      after do
+        system("git reset . &> /dev/null")
+        system("git checkout image-removed.jpg &> /dev/null")
+      end
+
+      it "should find images with the given extensions and ignore removed images" do
+        images = subject.get_modified_images(['.png', '.webp', '.jpg', '.jpeg'])
+        expect(images.length).to eq(4)
+        expected_images = ["image-1.WEBP", "image-2.jpeg", "image-3.PNG", "image-4.jpg"]
+        filtered = images.select { |image| expected_images.include?(image) }
+        expect(images).to eq(filtered)
+      end
+    end
+
+    context "when adding images to the current commit" do
+      it "should add the given images" do
+        images_to_add = ["image-1.WEBP", "image-2.jpeg"]
+        subject.add_to_commit(images_to_add)
+        added_images = `git diff --name-only --cached`
+        expect(added_images.split("\n")).to eq(images_to_add)
+      end
+    end
+  end
 end
