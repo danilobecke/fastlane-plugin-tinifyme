@@ -39,8 +39,7 @@ module Fastlane
       end
 
       def self.details
-        # Optional:
-        ""
+        "fastlane plugin to automate image compression in your project via precommit hook or one-off runs."
       end
 
       def self.available_options
