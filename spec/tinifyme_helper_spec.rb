@@ -88,22 +88,16 @@ describe Fastlane::Helper::TinifymeHelper do
     end
 
     context "when checking for staged images" do
-      before do
+      it "should find images with the given extensions and ignore removed images" do
         system("rm image-removed.jpg")
         system("git add .")
-      end
-
-      after do
-        system("git reset . &> /dev/null")
-        system("git checkout image-removed.jpg &> /dev/null")
-      end
-
-      it "should find images with the given extensions and ignore removed images" do
         images = subject.get_modified_images(['.png', '.webp', '.jpg', '.jpeg'])
         expect(images.length).to eq(4)
         expected_images = ["image-1.WEBP", "image-2.jpeg", "image-3.PNG", "image-4.jpg"]
         filtered = images.select { |image| expected_images.include?(image) }
         expect(images).to eq(filtered)
+        system("git reset . &> /dev/null")
+        system("git checkout image-removed.jpg &> /dev/null")
       end
     end
 
