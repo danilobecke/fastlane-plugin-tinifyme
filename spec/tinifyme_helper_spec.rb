@@ -73,12 +73,12 @@ describe Fastlane::Helper::TinifymeHelper do
       Dir.chdir('spec')
       FileUtils.mkdir_p(@git_path)
       Dir.chdir(@git_path)
-      system("git init -b main &> /dev/null")
-      system("git config --global --add user.name \"Test\" &> /dev/null")
-      system("git config --global --add user.email \"test@test.com\" &> /dev/null")
-      system("cp ../images/* .")
-      system("git add image-removed.jpg")
-      system("git commit -m \"Add image\" &> /dev/null")
+      `git init -b main &> /dev/null`
+      `git config --global --add user.name \"Test\" &> /dev/null`
+      `git config --global --add user.email \"test@test.com\" &> /dev/null`
+      `cp ../images/* .`
+      `git add image-removed.jpg`
+      `git commit -m \"Add image\" &> /dev/null`
     end
 
     after(:all) do
@@ -89,15 +89,15 @@ describe Fastlane::Helper::TinifymeHelper do
 
     context "when checking for staged images" do
       it "should find images with the given extensions and ignore removed images" do
-        system("rm image-removed.jpg")
-        system("git add .")
+        `rm image-removed.jpg`
+        `git add .`
         images = subject.get_modified_images(['.png', '.webp', '.jpg', '.jpeg'])
         expect(images.length).to eq(4)
         expected_images = ["image-1.WEBP", "image-2.jpeg", "image-3.PNG", "image-4.jpg"]
         filtered = images.select { |image| expected_images.include?(image) }
         expect(images).to eq(filtered)
-        system("git reset . &> /dev/null")
-        system("git checkout image-removed.jpg &> /dev/null")
+        `git reset . &> /dev/null`
+        `git checkout image-removed.jpg &> /dev/null`
       end
     end
 
