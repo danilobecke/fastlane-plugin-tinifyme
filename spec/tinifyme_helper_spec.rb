@@ -74,8 +74,11 @@ describe Fastlane::Helper::TinifymeHelper do
       FileUtils.mkdir_p(@git_path)
       Dir.chdir(@git_path)
       `git init -b main &> /dev/null`
-      `git config --global --add user.name \"Test\" &> /dev/null`
-      `git config --global --add user.email \"test@test.com\" &> /dev/null`
+      # name and email must be global (otherwise tests fail on CI)
+      user_name = `git config user.name`
+      user_email = `git config user.email`
+      `git config --global --add user.name \"Test\" &> /dev/null` unless !user_name.nil? && !user_name.empty?
+      `git config --global --add user.email \"test@test.com\" &> /dev/null` unless !user_email.nil? && !user_email.empty?
       `cp ../images/* .`
       `git add image-removed.jpg`
       `git commit -m \"Add image\" &> /dev/null`
