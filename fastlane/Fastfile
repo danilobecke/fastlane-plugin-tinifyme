@@ -1,3 +1,9 @@
-lane :test do
-  tinifyme
+lane :compress_image do |options|
+  file_path = options[:file_path]
+  api_key = options[:api_key]
+  tinifyme(file_path: file_path, api_key: api_key)
+end
+
+lane :compress_images_hook do
+  tinifyme(image_formats: "png", abort_commit_without_internet_connection: false)
 end

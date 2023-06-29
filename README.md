@@ -12,15 +12,32 @@ fastlane add_plugin tinifyme
 
 ## About tinifyme
 
-Compress assets using tinypng.
+Compress assets using [TinyPNG](https://tinypng.com). This plugin was designed to automate image compression in your project via pre-commit hook or one-off runs.
 
-**Note to author:** Add a more detailed description about this plugin here. If your plugin contains multiple actions, make sure to mention them here.
+You'll need a TinyPNG developer API key, which can be freely obtained on their website: [https://tinypng.com/developers](https://tinypng.com/developers).
 
 ## Example
 
-Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and `bundle exec fastlane test`.
+Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. 
 
-**Note to author:** Please set up a sample project to make it easy for users to explore what your plugin does. Provide everything that is necessary to try out the plugin in this project (including a sample Xcode/Android project if necessary)
+### Try it
+
+Clone the repo and run `fastlane install_plugins`.
+
+### Compress a specific image
+
+```bash
+bundle exec fastlane compress_image file_path:"path/to/file" api_key:"YOUR_API_KEY"
+```
+
+### Use as pre-commit hook
+
+1. Set your TinyPNG developer API key as the value of the `TINYPNG_API_KEY` env var
+2. Call your _fastlane_ lane from your `.git/hooks/pre-commit` file. For instance:
+
+```sh
+bundle exec fastlane compress_images_hook
+```
 
 ## Run tests for this plugin
 
