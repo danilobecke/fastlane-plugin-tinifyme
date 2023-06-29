@@ -1,7 +1,7 @@
 lane :compress_image do |options|
   file_path = options[:file_path]
   api_key = options[:api_key]
-  tinifyme(file_path: file_path, api_key: api_key)
+  tinifyme(file_path:, api_key:)
 end
 
 lane :compress_images_hook do
