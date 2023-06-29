@@ -15,6 +15,8 @@ fastlane add_plugin tinifyme
 
 Compress assets using [TinyPNG](https://tinypng.com). This plugin was designed to automate image compression in your project via pre-commit hook or one-off runs.
 
+When used as a pre-commit hook, it will search for staged images (added or modified), compress'em, and add them back into the current commit. All you need to do is call your lane invoking the tinifyme action!
+
 You'll need a TinyPNG developer API key, which can be freely obtained on their website: [https://tinypng.com/developers](https://tinypng.com/developers).
 
 ## Example
