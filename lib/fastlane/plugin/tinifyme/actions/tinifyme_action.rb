@@ -8,22 +8,22 @@ module Fastlane
       def self.run(params)
         key = params[:api_key]
         file_path = params[:file_path]
-        @helper = Helper::TinifymeHelper.new
+        helper = Helper::TinifymeHelper.new
         if file_path
           compress([file_path], key)
         else
-          UI.message(@helper.format!('Checking staged files...', is_step: true))
-          modified_images = @helper.get_modified_images(params[:image_formats])
+          UI.message(helper.format_output('Checking staged files...', is_step: true))
+          modified_images = helper.get_modified_images(params[:image_formats])
           length = modified_images.length
-          return UI.success(@helper.format!('No images found!')) unless length > 0
+          return UI.success(helper.format_output('No images found!')) unless length > 0
 
-          UI.success(@helper.format!(format('Found %<count>d %<text>s.', count: length, text: length > 1 ? 'images' : 'image')))
+          UI.success(helper.format_output("Found #{length} #{length > 1 ? 'images' : 'image'}."))
           compressed = compress(modified_images, key)
           return UI.abort_with_message!("The commit was aborted.") unless compressed || params[:abort_commit_without_internet_connection] == false
 
-          UI.message(@helper.format!('Adding to commit...', is_step: true))
-          @helper.add_to_commit(modified_images)
-          UI.success(@helper.format!(format('%<text>s added to the current commit.', text: compressed ? 'Compressed images' : 'Images')))
+          UI.message(helper.format_output('Adding to commit...', is_step: true))
+          helper.add_to_commit(modified_images)
+          UI.success(helper.format_output("#{compressed ? 'Compressed images' : 'Images'} added to the current commit."))
         end
       end
 
@@ -78,17 +78,26 @@ module Fastlane
         true
       end
 
-      private_class_method def self.compress(images, key)
-        has_connection = @helper.has_connection?
-        UI.important('No internet connection.') unless has_connection
-        return false unless has_connection
+      class << self
+        private
 
-        @helper.validate_credentials(key)
-        UI.message(@helper.format!('Compressing...', is_step: true))
-        @helper.compress(images)
-        length = images.length
-        UI.success(@helper.format!(format('Compressed %<count>d %<text>s.', count: length, text: length > 1 ? 'images' : 'image')))
-        return true
+        def helper
+          @helper ||= Helper::TinifymeHelper.new
+        end
+
+        def compress(images, key)
+          unless helper.has_connection?
+            UI.important('No internet connection.')
+            return false
+          end
+
+          helper.validate_credentials!(key)
+          UI.message(helper.format_output('Compressing...', is_step: true))
+          helper.compress!(images)
+          length = images.length
+          UI.success(helper.format_output("Compressed #{length} #{length > 1 ? 'images' : 'image'}."))
+          true
+        end
       end
     end
   end

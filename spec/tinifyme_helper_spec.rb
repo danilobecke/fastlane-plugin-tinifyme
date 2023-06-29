@@ -22,7 +22,7 @@ describe Fastlane::Helper::TinifymeHelper do
       expect(Tinify).to receive(:validate!).and_return(true)
       expect(FastlaneCore::UI).to receive(:message)
       expect(FastlaneCore::UI).to receive(:success)
-      subject.validate_credentials(key)
+      subject.validate_credentials!(key)
       expect(Tinify.key).to be key
     end
   end
@@ -33,7 +33,7 @@ describe Fastlane::Helper::TinifymeHelper do
       key = SecureRandom.hex
       expect(Tinify).to receive(:validate!).and_raise(Tinify::Error.create('message', 'type', 401))
       expect(FastlaneCore::UI).to receive(:abort_with_message!)
-      subject.validate_credentials(key)
+      subject.validate_credentials!(key)
       expect(Tinify.key).to be key
     end
   end
@@ -42,13 +42,13 @@ describe Fastlane::Helper::TinifymeHelper do
     it "should add > when is_step" do
       require 'securerandom'
       output = SecureRandom.hex
-      expect(subject.format!(output, is_step: true)).to eq(format(' > %<output>s', output:))
+      expect(subject.format_output(output, is_step: true)).to eq(format(' > %<output>s', output:))
     end
 
     it "should add identation when is_step = false" do
       require 'securerandom'
       output = SecureRandom.hex
-      expect(subject.format!(output)).to eq(format('   %<output>s', output:))
+      expect(subject.format_output(output)).to eq(format('   %<output>s', output:))
     end
   end
 
@@ -62,7 +62,7 @@ describe Fastlane::Helper::TinifymeHelper do
         expect(Tinify).to receive(:from_file).with(image).ordered.and_return(mock)
         expect(mock).to receive(:to_file).with(image).ordered
       end
-      subject.compress(images)
+      subject.compress!(images)
     end
   end
 

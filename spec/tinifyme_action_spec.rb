@@ -4,8 +4,7 @@ describe Fastlane::Actions::TinifymeAction do
   let(:key) { SecureRandom.hex }
 
   before(:each) do
-    @params = {}
-    @params[:api_key] = key
+    @params = { api_key: key }
   end
 
   context "when file_path is set" do
@@ -24,9 +23,9 @@ describe Fastlane::Actions::TinifymeAction do
         file_path = SecureRandom.hex
         @params[:file_path] = file_path
         expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:has_connection?).and_return(true)
-        expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:validate_credentials).with(key)
+        expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:validate_credentials!).with(key)
         expect(FastlaneCore::UI).to receive(:message)
-        expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:compress).with([file_path])
+        expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:compress!).with([file_path])
         expect(FastlaneCore::UI).to receive(:success)
         Fastlane::Actions::TinifymeAction.run(@params)
       end
@@ -86,9 +85,9 @@ describe Fastlane::Actions::TinifymeAction do
           expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:get_modified_images).and_return(images_found)
           expect(FastlaneCore::UI).to receive(:success)
           expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:has_connection?).and_return(true)
-          expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:validate_credentials).with(key)
+          expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:validate_credentials!).with(key)
           expect(FastlaneCore::UI).to receive(:message)
-          expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:compress).with(images_found)
+          expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:compress!).with(images_found)
           expect(FastlaneCore::UI).to receive(:success)
           expect(FastlaneCore::UI).to receive(:message)
           expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:add_to_commit).with(images_found)
