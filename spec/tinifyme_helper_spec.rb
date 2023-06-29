@@ -42,13 +42,13 @@ describe Fastlane::Helper::TinifymeHelper do
     it "should add > when is_step" do
       require 'securerandom'
       output = SecureRandom.hex
-      expect(subject.format_output(output, is_step: true)).to eq(format(' > %<output>s', output:))
+      expect(subject.format_output(output, is_step: true)).to eq(" > #{output}")
     end
 
     it "should add identation when is_step = false" do
       require 'securerandom'
       output = SecureRandom.hex
-      expect(subject.format_output(output)).to eq(format('   %<output>s', output:))
+      expect(subject.format_output(output)).to eq("   #{output}")
     end
   end
 

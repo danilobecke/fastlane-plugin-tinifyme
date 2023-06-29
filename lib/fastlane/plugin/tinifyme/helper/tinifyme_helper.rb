@@ -28,9 +28,11 @@ module Fastlane
       end
 
       def format_output(text, is_step: false)
-        return " > #{text}" if is_step
-
-        "   #{text}"
+        if is_step
+          return " > #{text}"
+        else
+          return "   #{text}"
+        end
       end
 
       def get_modified_images(image_extensions)
