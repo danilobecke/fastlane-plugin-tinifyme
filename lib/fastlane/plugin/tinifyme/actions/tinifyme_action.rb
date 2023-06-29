@@ -14,7 +14,7 @@ module Fastlane
         else
           UI.message(@helper.format!('Checking staged files...', is_step: true))
           modified_images = @helper.get_modified_images(params[:image_formats])
-          length = modified_images.length()
+          length = modified_images.length
           return UI.success(@helper.format!('No images found!')) unless length > 0
 
           UI.success(@helper.format!(format('Found %<count>d %<text>s.', count: length, text: length > 1 ? 'images' : 'image')))
@@ -86,7 +86,7 @@ module Fastlane
         @helper.validate_credentials(key)
         UI.message(@helper.format!('Compressing...', is_step: true))
         @helper.compress(images)
-        length = images.length()
+        length = images.length
         UI.success(@helper.format!(format('Compressed %<count>d %<text>s.', count: length, text: length > 1 ? 'images' : 'image')))
         return true
       end

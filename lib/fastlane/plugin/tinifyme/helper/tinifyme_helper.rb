@@ -28,9 +28,9 @@ module Fastlane
       end
 
       def format!(text, is_step: false)
-        return format(' > %<text>s', text: text) if is_step
+        return format(' > %<text>s', text:) if is_step
 
-        return format('   %<text>s', text: text)
+        return format('   %<text>s', text:)
       end
 
       def get_modified_images(image_extensions)

@@ -42,18 +42,18 @@ describe Fastlane::Helper::TinifymeHelper do
     it "should add > when is_step" do
       require 'securerandom'
       output = SecureRandom.hex
-      expect(subject.format!(output, is_step: true)).to eq(format(' > %<output>s', output: output))
+      expect(subject.format!(output, is_step: true)).to eq(format(' > %<output>s', output:))
     end
 
     it "should add identation when is_step = false" do
       require 'securerandom'
       output = SecureRandom.hex
-      expect(subject.format!(output)).to eq(format('   %<output>s', output: output))
+      expect(subject.format!(output)).to eq(format('   %<output>s', output:))
     end
   end
 
   context "when compressing images" do
-    it "should call Tinify.from_file images.length() times" do
+    it "should call Tinify.from_file images.length times" do
       require 'securerandom'
       images = []
       (1..rand(2..10)).each { images.append(SecureRandom.hex) }
