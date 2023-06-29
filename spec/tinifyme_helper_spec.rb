@@ -1,6 +1,6 @@
 describe Fastlane::Helper::TinifymeHelper do
   context "when the internet connection is not reachable" do
-    it "has_connection? should returna false" do
+    it "has_connection? should return false" do
       expect_any_instance_of(Net::HTTP).to receive(:start).and_raise(SocketError)
       expect(subject.has_connection?).to be false
     end

@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.author        = 'Danilo Becke'
   spec.email         = 'danilobecke@gmail.com'
 
-  spec.summary       = 'Compress assets using tinypng.'
+  spec.summary       = 'Compress assets using TinyPNG.'
   spec.homepage      = "https://github.com/danilobecke/fastlane-plugin-tinifyme"
   spec.license       = "MIT"
 

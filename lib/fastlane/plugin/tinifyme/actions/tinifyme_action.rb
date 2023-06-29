@@ -28,7 +28,7 @@ module Fastlane
       end
 
       def self.description
-        "Compress assets using tinypng."
+        "Compress assets using TinyPNG."
       end
 
       def self.authors
@@ -46,7 +46,7 @@ module Fastlane
         [
           FastlaneCore::ConfigItem.new(
             key: :api_key,
-            description: "Required tinypng API key (https://tinypng.com/developers)",
+            description: "Required TinyPNG API key (https://tinypng.com/developers)",
             env_name: "TINYPNG_API_KEY",
             optional: false,
             type: String
@@ -69,7 +69,7 @@ module Fastlane
             description: "Decide whether the commit should be aborted when there are images to be compressed and the internet connection is not reachable (thus, the compression won't be possible)",
             default_value: true,
             optional: false,
-            type: Array
+            type: Boolean
           )
         ]
       end

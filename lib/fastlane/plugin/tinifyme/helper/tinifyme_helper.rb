@@ -19,7 +19,7 @@ module Fastlane
       end
 
       def validate_credentials(api_key)
-        UI.message(self.format!('Checking tinypng credentials...', is_step: true))
+        UI.message(self.format!('Checking TinyPNG credentials...', is_step: true))
         Tinify.key = api_key
         Tinify.validate!
         UI.success(self.format!('Valid credentials!'))

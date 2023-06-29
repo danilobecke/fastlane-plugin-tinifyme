@@ -10,7 +10,7 @@ describe Fastlane::Actions::TinifymeAction do
 
   context "when file_path is set" do
     context "when the internet connection is not reachable" do
-      it "should finish with a important message" do
+      it "should finish with an important message" do
         file_path = SecureRandom.hex
         @params[:file_path] = file_path
         expect_any_instance_of(Fastlane::Helper::TinifymeHelper).to receive(:has_connection?).and_return(false)
