@@ -1,6 +1,7 @@
 # tinifyme plugin
 
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-tinifyme)
+[![Gem Version](https://badge.fury.io/rb/fastlane-plugin-tinifyme.svg)](https://badge.fury.io/rb/fastlane-plugin-tinifyme)
 
 ## Getting Started
 
