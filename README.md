@@ -38,6 +38,8 @@ bundle exec fastlane compress_image file_path:"path/to/file" api_key:"YOUR_API_K
 
 ### Use as pre-commit hook
 
+https://github.com/danilobecke/fastlane-plugin-tinifyme/assets/11629419/2dfc9823-1263-46b4-9f72-a625ecc0712f
+
 1. Set your TinyPNG developer API key as the value of the `TINYPNG_API_KEY` env var
 2. Call your _fastlane_ lane from your `.git/hooks/pre-commit` file. For instance:
 
