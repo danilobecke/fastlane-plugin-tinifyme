@@ -1,3 +1,5 @@
+# Repository settings
+
 repository:
   topics: image-compression, fastlane-plugin, ios, android, ruby, gem, swift, kotlin
   private: false
