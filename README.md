@@ -2,6 +2,9 @@
 
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-tinifyme)
 [![Gem Version](https://badge.fury.io/rb/fastlane-plugin-tinifyme.svg)](https://badge.fury.io/rb/fastlane-plugin-tinifyme)
+<a href="https://codeclimate.com/github/danilobecke/fastlane-plugin-tinifyme/test_coverage"><img src="https://api.codeclimate.com/v1/badges/feeed02eb3bc51bd7ded/test_coverage" /></a>
+<a href="https://github.com/danilobecke/fastlane-plugin-tinifyme/actions/workflows/test.yml"><img src="https://github.com/danilobecke/fastlane-plugin-tinifyme/actions/workflows/test.yml/badge.svg" /></a>
+<a href="https://codeclimate.com/github/danilobecke/fastlane-plugin-tinifyme/maintainability"><img src="https://api.codeclimate.com/v1/badges/feeed02eb3bc51bd7ded/maintainability" /></a>
 
 ## Getting Started
 
